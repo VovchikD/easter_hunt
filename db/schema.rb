@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_17_180424) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_18_101048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "easter_eggs", force: :cascade do |t|
+    t.string "clue"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.bigint "discoverer_id"
+    t.boolean "found", default: false
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_easter_eggs_on_code", unique: true
+    t.index ["discoverer_id"], name: "index_easter_eggs_on_discoverer_id"
+  end
 
   create_table "hunters", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -20,4 +33,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_17_180424) do
     t.string "password_digest"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "easter_eggs", "hunters", column: "discoverer_id"
 end
