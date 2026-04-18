@@ -11,4 +11,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    namespace :v1 do
+      namespace :hunter do
+        post "signup",       to: "registrations#signup"
+        post "login",        to: "sessions#login"
+        post "oauth/google", to: "oauth#google"
+      end
+    end
+  end
 end
