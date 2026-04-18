@@ -12,7 +12,7 @@ class BaseController < ApplicationController
     }, status: status
   end
 
-  def authenticate_hunter!
+  def authenticate!
     header = request.headers["Authorization"]
     return unauthorized unless header&.start_with?("Bearer ")
 
