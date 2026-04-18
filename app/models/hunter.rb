@@ -2,4 +2,6 @@
 
 class Hunter < ApplicationRecord
   has_secure_password
+
+  has_many :found_eggs, class_name: "EasterEgg", foreign_key: :discoverer_id
 end

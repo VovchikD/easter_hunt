@@ -11,11 +11,11 @@ module Api
             payload = { hunter_id: hunter.id, exp: 1.hour.from_now.to_i }
 
             render json: {
-              token: ::Auth::JwtService.generate_token(hunter_id: hunter.id, payload: payload),
+              token: ::Auth::JwtService.generate_token(payload: payload),
               hunter: HunterBlueprint.render(hunter)
             }
           else
-            render_error("Invalid credentials", :unauthorized)
+            raise Unauthorized
           end
         end
 

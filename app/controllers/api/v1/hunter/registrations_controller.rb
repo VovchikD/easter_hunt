@@ -10,7 +10,7 @@ module Api
 
           if hunter.save
             render json: {
-              token: ::Auth::JwtService.generate_token(hunter_id: hunter.id, payload: payload),
+              token: ::Auth::JwtService.generate_token(payload: payload),
               hunter: HunterBlueprint.render(hunter)
             }, status: :created
           else

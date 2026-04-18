@@ -18,6 +18,14 @@ Rails.application.routes.draw do
         post "signup",       to: "registrations#signup"
         post "login",        to: "sessions#login"
         post "oauth/google", to: "oauth#google"
+
+        resources :easter_eggs, only: [] do
+          collection do
+            get :found
+            get :not_found
+            post :mark_found
+          end
+        end
       end
     end
   end

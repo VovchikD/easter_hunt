@@ -9,7 +9,7 @@ module Api
           hunter = find_or_create_hunter(payload)
 
           render json: {
-            token: ::Auth::JwtService.generate_token(hunter_id: hunter.id, payload: payload),
+            token: ::Auth::JwtService.generate_token(payload: payload),
             hunter: HunterBlueprint.render_as_hash(hunter)
           }
         rescue => e
