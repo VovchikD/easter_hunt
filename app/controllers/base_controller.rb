@@ -12,20 +12,21 @@ class BaseController < ApplicationController
     }, status: status
   end
 
-  def authenticate_hunter!
+  def authenticate!
     header = request.headers["Authorization"]
     return unauthorized unless header&.start_with?("Bearer ")
 
     token = header.split.last
     begin
       payload = JWT.decode(token, Rails.application.secret_key_base, true, algorithm: "HS256")[0]
-      @current_hunter = Hunter.find(payload["hunter_id"])
+      @current_hunter = Hunter.find(payload["hunter_id"]) if payload["hunter_id"]
+      @admin = Admin.find(payload["admin_id"]) if payload["admin_id"]
     rescue JWT::DecodeError, ActiveRecord::RecordNotFound
       unauthorized
     end
   end
 
-  attr_reader :current_hunter
+  attr_reader :current_hunter, :admin
 
   private
 

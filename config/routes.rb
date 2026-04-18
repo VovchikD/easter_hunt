@@ -29,4 +29,14 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :api do
+    namespace :v1 do
+      namespace :admin do
+        post "login", to: "sessions#login"
+
+        resources :easter_eggs, only: [ :index, :create, :update ]
+      end
+    end
+  end
 end

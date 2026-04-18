@@ -2,17 +2,17 @@
 
 module Api
   module V1
-    module Hunter
+    module Admin
       class SessionsController < BaseController
         def login
-          hunter = ::Hunter.find_by(email: params[:email])
+          admin = ::Admin.find_by(email: params[:email])
 
-          if hunter&.authenticate(params[:password])
-            payload = { hunter_id: hunter.id, exp: 1.hour.from_now.to_i }
+          if admin&.authenticate(params[:password])
+            payload = { admin_id: admin.id, exp: 1.hour.from_now.to_i }
 
             render json: {
               token: ::Auth::JwtService.generate_token(payload: payload),
-              hunter: HunterBlueprint.render(hunter)
+              admin: AdminBlueprint.render(admin)
             }
           else
             raise Unauthorized

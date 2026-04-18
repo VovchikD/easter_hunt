@@ -4,7 +4,7 @@ module Api
   module V1
     module Hunter
       class EasterEggsController < BaseController
-        before_action :authenticate_hunter!
+        before_action :authenticate!
 
         def found
           eggs = current_hunter.found_eggs
