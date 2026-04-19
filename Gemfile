@@ -22,6 +22,9 @@ gem "bcrypt", "~> 3.1.7"
 gem "jwt", "~> 3.1"
 gem "blueprinter", "~> 1.3"
 gem "googleauth", "~> 1.16"
+gem "activeadmin", "~> 4.0.0.beta22"
+gem "devise", "~> 5.0"
+gem "activeadmin_assets", "~> 1.3.0"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
