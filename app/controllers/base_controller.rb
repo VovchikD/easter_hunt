@@ -2,6 +2,7 @@
 
 class BaseController < ApplicationController
   include ErrorHandler
+  include AuthenticationHandler
 
   skip_before_action :verify_authenticity_token
 
@@ -12,25 +13,5 @@ class BaseController < ApplicationController
     }, status: status
   end
 
-  def authenticate!
-    header = request.headers["Authorization"]
-    return unauthorized unless header&.start_with?("Bearer ")
-
-    token = header.split.last
-    begin
-      payload = JWT.decode(token, Rails.application.secret_key_base, true, algorithm: "HS256")[0]
-      @current_hunter = Hunter.find(payload["hunter_id"]) if payload["hunter_id"]
-      @admin = Admin.find(payload["admin_id"]) if payload["admin_id"]
-    rescue JWT::DecodeError, ActiveRecord::RecordNotFound
-      unauthorized
-    end
-  end
-
-  attr_reader :current_hunter, :admin
-
-  private
-
-  def unauthorized
-    render_error("Unauthorized", :unauthorized)
-  end
+  attr_reader :current_hunter, :current_administrator
 end

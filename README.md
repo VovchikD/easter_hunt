@@ -56,7 +56,7 @@ Easter Eggs API:
   GET /api/v1/hunter/easter_eggs/not_found
 
   Mark Egg as Found
-  POST /api/v1/hunter/easter_eggs/mark_found
+  PATCH /api/v1/hunter/easter_eggs/mark_found
   Body:
     {
       "code": "code"

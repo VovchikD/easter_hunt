@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :admin_devises, ActiveAdmin::Devise.config
+  devise_for :system_admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
           collection do
             get :found
             get :not_found
-            post :mark_found
+            patch :mark_found
           end
         end
       end
