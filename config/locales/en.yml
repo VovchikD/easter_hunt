@@ -29,3 +29,8 @@
 
 en:
   hello: "Hello world"
+  active_admin:
+    hunter:
+      title: "Hunter"
+    easter_egg:
+      title: "Easter Egg"

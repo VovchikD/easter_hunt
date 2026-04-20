@@ -1,0 +1,170 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/admin/easter_eggs":
+    get:
+      summary: receive list easter eggs
+      tags:
+      - Admin easter eggs
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: hunter_email
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: create easter egg
+      tags:
+      - Admin easter eggs
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                latitude:
+                  type: number
+                longitude:
+                  type: number
+                clue:
+                  type: string
+  "/api/v1/admin/easter_eggs/{id}":
+    patch:
+      summary: update easter eggs
+      tags:
+      - Admin easter eggs
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+  "/api/v1/admin/login":
+    post:
+      summary: Login admin
+      tags:
+      - Admin session
+      parameters: []
+      responses:
+        '200':
+          description: successful login
+        '401':
+          description: invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  "/api/v1/hunter/easter_eggs/found":
+    get:
+      summary: receive list of found eggs
+      tags:
+      - Hunter found easter eggs
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+  "/api/v1/hunter/easter_eggs/not_found":
+    get:
+      summary: receive list of not found eggs
+      tags:
+      - Hunter not found easter eggs
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+  "/api/v1/hunter/easter_eggs/mark_found":
+    patch:
+      summary: mark easter egg as found
+      tags:
+      - Hunter mark egg as found
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: code
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: updated
+  "/api/v1/hunter/signup":
+    post:
+      summary: Registration hunter
+      tags:
+      - Hunter registration
+      parameters: []
+      responses:
+        '200':
+          description: successful registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  "/api/v1/hunter/login":
+    post:
+      summary: Login hunter
+      tags:
+      - Hunter session
+      parameters: []
+      responses:
+        '200':
+          description: successful login
+        '401':
+          description: invalid credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: localhost:3000
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

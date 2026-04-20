@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+  devise_for :system_admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -23,7 +27,7 @@ Rails.application.routes.draw do
           collection do
             get :found
             get :not_found
-            post :mark_found
+            patch :mark_found
           end
         end
       end
