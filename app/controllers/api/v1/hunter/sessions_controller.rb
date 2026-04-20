@@ -5,18 +5,15 @@ module Api
     module Hunter
       class SessionsController < BaseController
         def login
-          hunter = ::Hunter.find_by(email: params[:email])
+          result = Hunters::AuthenticationService.call(params: permited_params)
 
-          if hunter&.authenticate(params[:password])
-            payload = { hunter_id: hunter.id, exp: 1.hour.from_now.to_i }
+          render_authentication_response(result)
+        end
 
-            render json: {
-              token: ::Auth::JwtService.generate_token(payload: payload),
-              hunter: HunterBlueprint.render(hunter)
-            }
-          else
-            raise Unauthorized
-          end
+        private
+
+        def permited_params
+          params.permit(:email, :password)
         end
       end
     end

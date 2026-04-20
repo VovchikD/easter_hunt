@@ -5,18 +5,15 @@ module Api
     module Admin
       class SessionsController < BaseController
         def login
-          admin = ::Admin.find_by(email: params[:email])
+          result = Admins::AuthenticationService.call(params: permited_params)
 
-          if admin&.authenticate(params[:password])
-            payload = { admin_id: admin.id, exp: 1.hour.from_now.to_i }
+          render_authentication_response(result)
+        end
 
-            render json: {
-              token: ::Auth::JwtService.generate_token(payload: payload),
-              admin: AdminBlueprint.render(admin)
-            }
-          else
-            raise Unauthorized
-          end
+        private
+
+        def permited_params
+          params.permit(:email, :password)
         end
       end
     end

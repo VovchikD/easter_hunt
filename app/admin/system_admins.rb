@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveAdmin.register AdminDevise do
+ActiveAdmin.register SystemAdmin do
   menu priority: 2
 
   permit_params :email, :password, :password_confirmation
