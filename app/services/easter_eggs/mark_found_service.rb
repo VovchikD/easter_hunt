@@ -12,13 +12,13 @@ module EasterEggs
     end
 
     def call
-      egg = EasterEgg.find_by(code: @code)
+      record = EasterEgg.find_by(code: @code)
 
-      raise Errors::InvalidCode unless egg
-      raise Errors::EggAlreadyFound if egg.found?
+      raise Errors::InvalidCode unless record
+      raise Errors::EggAlreadyFound if record.found?
 
-      egg.update!(found: true, discoverer: @hunter)
-      egg
+      record.update!(found: true, discoverer: @hunter)
+      record
     end
   end
 end

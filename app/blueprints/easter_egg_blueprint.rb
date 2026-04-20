@@ -9,4 +9,10 @@ class EasterEggBlueprint < Blueprinter::Base
     fields :code, :found
     association :discoverer, blueprint: HunterBlueprint
   end
+
+  view :filtered do
+    fields :code, :latitude, :longitude, :clue, :found
+
+    association :discoverer, blueprint: HunterBlueprint
+  end
 end

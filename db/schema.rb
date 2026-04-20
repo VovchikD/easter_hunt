@@ -10,9 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_18_101048) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_19_090318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.bigint "author_id"
+    t.string "author_type"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.string "namespace"
+    t.bigint "resource_id"
+    t.string "resource_type"
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "easter_eggs", force: :cascade do |t|
     t.string "clue"
@@ -32,6 +53,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_18_101048) do
     t.string "email"
     t.string "password_digest"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "system_admins", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_system_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_system_admins_on_reset_password_token", unique: true
   end
 
   add_foreign_key "easter_eggs", "hunters", column: "discoverer_id"
