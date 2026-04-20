@@ -25,6 +25,7 @@ gem "googleauth", "~> 1.16"
 gem "activeadmin", "~> 4.0.0.beta22"
 gem "devise", "~> 5.0"
 gem "activeadmin_assets", "~> 1.3.0"
+gem "rswag", "~> 2.17.0"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -69,4 +70,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "rspec-rails", "~> 8.0"
+  gem "factory_bot_rails"
 end
