@@ -5,17 +5,9 @@ module Api
     module Hunter
       class RegistrationsController < BaseController
         def signup
-          hunter = ::Hunter.new(hunter_params)
-          payload = { hunter_id: hunter.id, exp: 1.hour.from_now.to_i }
+          result = Hunters::RegistrationService.call(hunter_params: hunter_params)
 
-          if hunter.save
-            render json: {
-              token: ::Auth::JwtService.generate_token(hunter_id: hunter.id, payload: payload),
-              hunter: HunterBlueprint.render(hunter)
-            }, status: :created
-          else
-            render_error(hunter.errors.full_messages, :unprocessable_entity)
-          end
+          render_authentication_response(result)
         end
 
         private

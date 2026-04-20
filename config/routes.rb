@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
+  devise_for :system_admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,6 +22,24 @@ Rails.application.routes.draw do
         post "signup",       to: "registrations#signup"
         post "login",        to: "sessions#login"
         post "oauth/google", to: "oauth#google"
+
+        resources :easter_eggs, only: [] do
+          collection do
+            get :found
+            get :not_found
+            patch :mark_found
+          end
+        end
+      end
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      namespace :admin do
+        post "login", to: "sessions#login"
+
+        resources :easter_eggs, only: [ :index, :create, :update ]
       end
     end
   end
