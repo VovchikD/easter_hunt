@@ -7,7 +7,7 @@ module Api
         def login
           result = Admins::AuthenticationService.call(params: permited_params)
 
-          render json: { result: result }
+          render_authentication_response(result)
         end
 
         private

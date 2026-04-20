@@ -14,4 +14,10 @@ class BaseController < ApplicationController
   end
 
   attr_reader :current_hunter, :current_administrator
+
+  def render_authentication_response(result)
+    status = result[:status] == :success ? :ok : :unauthorized
+
+    render json: { result: result }, status: status
+  end
 end

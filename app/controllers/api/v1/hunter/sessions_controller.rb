@@ -7,7 +7,7 @@ module Api
         def login
           result = Hunters::AuthenticationService.call(params: permited_params)
 
-          render json: { result: result }
+          render_authentication_response(result)
         end
 
         private

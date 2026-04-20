@@ -7,7 +7,7 @@ module Api
         def signup
           result = Hunters::RegistrationService.call(hunter_params: hunter_params)
 
-          render json: { result: result }
+          render_authentication_response(result)
         end
 
         private
