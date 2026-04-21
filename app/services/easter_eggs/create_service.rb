@@ -1,17 +1,11 @@
 # froze_string_literal: true
 
 module EasterEggs
-  class CreateService
-    def initialize(params:)
-      @params = params
-    end
-
-    def self.call(params:)
-      new(params:).call
-    end
+  class CreateService < BaseService
+    attr_reader :params
 
     def call
-      record = ::EasterEgg.new(@params)
+      record = ::EasterEgg.new(params)
       generate_code(record)
 
       if record.save
